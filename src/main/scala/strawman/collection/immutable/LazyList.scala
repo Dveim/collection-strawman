@@ -176,8 +176,9 @@ sealed abstract class LazyList[+A]
     if (this.isEmpty || xs.isEmpty) LazyList.empty
     else LazyList.cons((this.head, xs.head), this.tail.zip(xs.tail))
 
-  override final def zipWithIndex: LazyList[(A, Int)] = this.zip(LazyList.from(0))
+  override final def zipWithIndex(start: Int = 0, step: Int = 1): LazyList[(A, Int)] = this.zip(LazyList.from(start, step))
 
+  override final def zipWithIndex: LazyList[(A, Int)] = zipWithIndex(start = 0, step = 1)
 }
 
 object LazyList extends SeqFactory[LazyList] {

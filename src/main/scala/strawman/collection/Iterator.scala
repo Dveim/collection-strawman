@@ -620,12 +620,12 @@ trait Iterator[+A] extends IterableOnce[A] { self =>
     *                 corresponding elements of this iterator and their indices.
     *  @note          Reuse: $consumesAndProducesIterator
     */
-  def zipWithIndex: Iterator[(A, Int)] = new Iterator[(A, Int)] {
-    var idx = 0
+  def zipWithIndex(start: Int = 0, step: Int = 1): Iterator[(A, Int)] = new Iterator[(A, Int)] {
+    var idx = start
     def hasNext = self.hasNext
     def next() = {
       val ret = (self.next(), idx)
-      idx += 1
+      idx += step
       ret
     }
   }

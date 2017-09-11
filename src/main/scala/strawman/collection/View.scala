@@ -222,8 +222,8 @@ object View extends IterableFactory[View] {
     def iterator(): Iterator[A] = underlying.iterator().patch(from, other.iterator(), replaced)
   }
 
-  case class ZipWithIndex[A](underlying: Iterable[A]) extends View[(A, Int)] {
-    def iterator(): Iterator[(A, Int)] = underlying.iterator().zipWithIndex
+  case class ZipWithIndex[A](underlying: Iterable[A], start: Int = 0, step: Int = 1) extends View[(A, Int)] {
+    def iterator(): Iterator[(A, Int)] = underlying.iterator().zipWithIndex(start, step)
     override def knownSize: Int = underlying.knownSize
   }
 

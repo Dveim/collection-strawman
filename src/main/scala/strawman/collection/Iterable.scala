@@ -841,11 +841,14 @@ trait IterableOps[+A, +CC[X], +C] extends Any {
   /** Zips this $coll with its indices.
     *
     *  @return        A new collection of type `That` containing pairs consisting of all elements of this
-    *                 $coll paired with their index. Indices start at `0`.
+    *                 $coll paired with their index. Indices start at `start` and are increased by `step`.
     *  @example
     *    `List("a", "b", "c").zipWithIndex == List(("a", 0), ("b", 1), ("c", 2))`
     */
-  def zipWithIndex: CC[(A @uncheckedVariance, Int)] = fromIterable(View.ZipWithIndex(toIterable))
+  def zipWithIndex(start: Int = 0, step: Int = 0): CC[(A @uncheckedVariance, Int)] = fromIterable(View.ZipWithIndex(toIterable, start, step))
+
+  /** Alias for default zipWithIndex. As a separate method, to support old syntax */
+  @`inline` def zipWithIndex: CC[(A @uncheckedVariance, Int)] = zipWithIndex(start = 0, step = 1)
 
   /** Converts this $coll of pairs into two collections of the first and second
     *  half of each pair.
